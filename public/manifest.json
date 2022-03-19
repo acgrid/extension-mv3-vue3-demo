@@ -1,0 +1,13 @@
+{
+  "name": "MVV3",
+  "description": "Demo of MV3 and Vue3",
+  "version": "__VERSION__",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Try me",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
