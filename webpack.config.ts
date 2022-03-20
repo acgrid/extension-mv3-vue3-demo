@@ -3,10 +3,8 @@ import { Configuration, Compilation, Compiler, sources, EnvironmentPlugin, Defin
 import CopyPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 
-export default (env: string): Configuration => {
-  const mode = ((env || process.env.NODE_ENV) as 'production' | 'development') || 'production'
+export default (): Configuration => {
   return {
-    mode,
     entry: {
       background: path.join(__dirname, 'src', 'service', 'index.ts'),
       popup: path.join(__dirname, 'src', 'popup', 'index.ts')
@@ -17,7 +15,7 @@ export default (env: string): Configuration => {
         return path?.chunk?.name === 'background' ? 'background.js' : `js/${path?.chunk?.name}.js`
       }
     },
-    devtool: mode === 'development' ? 'inline-source-map' : false,
+    devtool: 'source-map', // CSP violated for eval
     module: {
       rules: [
         {
