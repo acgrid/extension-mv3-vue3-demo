@@ -14,7 +14,7 @@ export default (env: string): Configuration => {
     output: {
       path: path.join(__dirname, 'dist'),
       filename: (path) => {
-        return path.chunk.name === 'background' ? 'background.js' : `js/${path.chunk.name}.js`
+        return path?.chunk?.name === 'background' ? 'background.js' : `js/${path?.chunk?.name}.js`
       }
     },
     devtool: mode === 'development' ? 'inline-source-map' : false,
@@ -61,6 +61,7 @@ export default (env: string): Configuration => {
         ]
       }),
       (compiler: Compiler): void => { // 精简插件形式
+        if (!process?.env?.npm_package_version) return
         const name = 'tagging-version' // 用于版本号标注
         // https://webpack.js.org/api/compiler-hooks/#make
         compiler.hooks.make.tap(name, compilation => {
@@ -73,7 +74,7 @@ export default (env: string): Configuration => {
               if (path.endsWith('popup.html') || path.endsWith('manifest.json')) {
                 // https://webpack.js.org/api/compilation-object/#updateasset
                 // https://docs.npmjs.com/cli/v6/using-npm/scripts#packagejson-vars
-                compilation.updateAsset(path, asset => new sources.RawSource(asset.source().toString().replace('__VERSION__', process.env.npm_package_version)))
+                compilation.updateAsset(path, asset => new sources.RawSource(asset.source().toString().replace('__VERSION__', process.env.npm_package_version as string)))
               }
             })
           })

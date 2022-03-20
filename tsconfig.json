@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["ESNext", "WebWorker"],
-    "noImplicitAny": false,
+    "target": "esnext",
+    "strict": true,
     "rootDir": "./",
     "outDir": "dist/js",
     "sourceMap": false,
