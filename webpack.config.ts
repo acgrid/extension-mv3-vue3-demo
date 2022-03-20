@@ -1,5 +1,5 @@
 import path from 'path'
-import { Configuration, Compilation, Compiler, sources, EnvironmentPlugin } from 'webpack'
+import { Configuration, Compilation, Compiler, sources, EnvironmentPlugin, DefinePlugin } from 'webpack'
 import CopyPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 
@@ -59,6 +59,10 @@ export default (env: string): Configuration => {
             }
           }
         ]
+      }),
+      new DefinePlugin({
+        __VUE_OPTIONS_API__: false,
+        __VUE_PROD_DEVTOOLS__: false
       }),
       (compiler: Compiler): void => { // 精简插件形式
         if (!process?.env?.npm_package_version) return
